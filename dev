@@ -1,3 +1,0 @@
-PROJECT_NAME=paper_webui_rust
-
-cargo watch -s "cargo build --release --target=wasm32-wasi && lunatic run ./target/wasm32-wasi/release/$PROJECT_NAME.wasm"
