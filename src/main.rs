@@ -3,7 +3,6 @@ use axum_live_view::{
     event_data::EventData, html, live_view::Updated, Html, LiveView, LiveViewUpgrade,
 };
 use serde::{Deserialize, Serialize};
-use std::convert::Infallible;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -15,9 +14,9 @@ async fn main() -> anyhow::Result<()> {
         // is of course also possible.
         .route("/assets/live-view.js", axum_live_view::precompiled_js());
 
-    // ...that we run like any other axum app
-    let listener = tokio::net::TcpListener::bind(&"0.0.0.0:3000".parse().unwrap()).await?;
-    axum::serve(listener, app).await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+    println!("Listening on http://localhost:3000");
+    axum::serve(listener, app).await?;
 
     Ok(())
 }
@@ -83,15 +82,19 @@ impl LiveView for Counter {
     // `EventData` contains data from the event that happened in the
     // browser. This might be values of input fields or which key was pressed in
     // a keyboard event.
-    fn update(mut self, msg: Msg, _data: Option<EventData>) -> Updated<Self> {
+    fn update(mut self, msg: Msg, data: Option<EventData>) -> Updated<Self> {
         match msg {
             Msg::Increment => {
+                print!("{} += 1 => ", self.count);
                 self.count += 1;
+                println!("{}", self.count);
             }
             Msg::Decrement => {
+                print!("{} -= 1 => ", self.count);
                 if self.count > 0 {
                     self.count -= 1;
                 }
+                println!("{}", self.count);
             }
         }
 

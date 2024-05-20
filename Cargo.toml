@@ -7,7 +7,7 @@ edition = "2021"
 anyhow = "1.0.86"
 axum = "0.7.5"
 serde = "1.0.202"
-axum-live-view = { git = "https://github.com/davidpdrsn/axum-live-view", features = [
+axum-live-view = { git = "https://github.com/vojd/axum-live-view", features = [
 	"precompiled-js",
-] }
+], branch = "chore/axum-0.7" }
 tokio = { version = "1.37.0", features = ["full"] }
