@@ -730,12 +730,28 @@ checksum = "0a81de8cce7e1b8185afdf1ebeef5bfce009b06f8d0b7527d3baddc7f81f0487"
 dependencies = [
  "bincode",
  "lunatic-macros",
- "lunatic-sys",
+ "lunatic-sys 0.13.0",
  "lunatic-test",
  "paste",
  "rustversion",
  "serde",
  "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "lunatic"
+version = "0.14.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bbe719e7cb256d07d1a0e1e4b096849a07b128bbb6c7ae8756120b650fbd151e"
+dependencies = [
+ "bincode",
+ "lunatic-macros",
+ "lunatic-sys 0.14.0",
+ "lunatic-test",
+ "paste",
+ "rustversion",
+ "serde",
  "thiserror",
 ]
 
@@ -746,7 +762,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac2236f0168dfb4ca227d25c5ed4de879a70fa4c3d11087b86fbc27d29144ce7"
 dependencies = [
  "chrono",
- "lunatic",
+ "lunatic 0.13.1",
  "serde",
  "yansi",
 ]
@@ -769,6 +785,12 @@ name = "lunatic-sys"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20b8b9023c9664595f6cff816a711beec4e9f50d25ce6ed31eb2465a8232a435"
+
+[[package]]
+name = "lunatic-sys"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d572d8b5fa4693714650d42566863cf218bb69119d5d8514129972ee00c75ada"
 
 [[package]]
 name = "lunatic-test"
@@ -907,6 +929,7 @@ name = "paper_webui_rust"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "lunatic 0.14.1",
  "serde",
  "submillisecond",
  "submillisecond-live-view",
@@ -1443,7 +1466,7 @@ dependencies = [
  "headers",
  "http",
  "httparse",
- "lunatic",
+ "lunatic 0.13.1",
  "lunatic-log",
  "mime",
  "paste",
@@ -1468,7 +1491,7 @@ dependencies = [
  "hmac",
  "itertools",
  "jwt",
- "lunatic",
+ "lunatic 0.13.1",
  "lunatic-log",
  "maud-live-view",
  "nipper",

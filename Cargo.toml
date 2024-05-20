@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.86"
+lunatic = "0.14.1"
 serde = "1.0.202"
 submillisecond = "0.4.1"
 submillisecond-live-view = "0.4.1"
