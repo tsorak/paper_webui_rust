@@ -25,9 +25,11 @@ impl Instance {
             "-Xmx",
             &cfg.mem_max,
             cfg.executable
-                .ok_or(ServerExecutable::msg("No server executable was provided"))?
+                .ok_or(ServerExecutable::box_msg(
+                    "No server executable was provided",
+                ))?
                 .to_str()
-                .ok_or(ServerExecutable::msg(
+                .ok_or(ServerExecutable::box_msg(
                     "Executable path contains invalid characters",
                 ))?,
             "--nogui",
@@ -46,7 +48,7 @@ impl InstanceConfig {
         let p: PathBuf = p.into();
         let p = p
             .canonicalize()
-            .map_err(|e| ServerExecutable::new(p, format!("ServerExecutable error: {e}")))?;
+            .map_err(|e| ServerExecutable::box_new(p, format!("ServerExecutable error: {e}")))?;
 
         self.executable = Some(p);
         Ok(())

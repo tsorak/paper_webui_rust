@@ -9,12 +9,19 @@ pub enum Error {
     ServerExecutable(ServerExecutable),
 }
 
+impl From<Box<dyn std::error::Error>> for Error {
+    fn from(value: Box<dyn std::error::Error>) -> Self {
+        dbg!(value);
+        Error::Unexpected
+    }
+}
+
 impl Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Unexpected => {
                 //
-                write!(f, "Unexpected library error")
+                write!(f, "Unexpected paper_webui::core error")
             }
             Self::ServerExecutable(e) => {
                 //
@@ -38,14 +45,14 @@ pub mod instance {
     }
 
     impl ServerExecutable {
-        pub fn new(path: PathBuf, message: impl AsRef<str>) -> crate::core::Error {
+        pub fn box_new(path: PathBuf, message: impl AsRef<str>) -> crate::core::Error {
             crate::core::Error::ServerExecutable(Self {
                 path: Some(path),
                 message: message.as_ref().to_string(),
             })
         }
 
-        pub fn msg(message: impl AsRef<str>) -> crate::core::Error {
+        pub fn box_msg(message: impl AsRef<str>) -> crate::core::Error {
             crate::core::Error::ServerExecutable(Self {
                 path: None,
                 message: message.as_ref().to_string(),
