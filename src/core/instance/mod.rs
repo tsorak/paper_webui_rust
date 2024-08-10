@@ -5,6 +5,7 @@ use tokio::process::Command;
 use crate::core::error::instance::ServerExecutable;
 
 pub struct InstanceConfig {
+    pub name: String,
     pub mem_initial: String,
     pub mem_max: String,
     executable: Option<PathBuf>,
@@ -58,6 +59,7 @@ impl InstanceConfig {
 impl Default for InstanceConfig {
     fn default() -> Self {
         Self {
+            name: "default".into(),
             mem_initial: "256M".into(),
             mem_max: "2G".into(),
             executable: None,

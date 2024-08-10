@@ -4,8 +4,10 @@ pub use error::Error;
 pub mod instance;
 pub mod runner;
 
-pub fn init() -> Result<runner::Runner, crate::core::Error> {
-    println!("init");
+use std::sync::Arc;
 
-    Err(Error::Unexpected)
+pub fn init() -> Result<Arc<runner::Runner>, crate::core::Error> {
+    let rnr = Arc::new(runner::Runner::new());
+
+    Ok(rnr)
 }

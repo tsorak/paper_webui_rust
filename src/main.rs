@@ -5,9 +5,14 @@ async fn main() {
     use leptos::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use paper_webui::app::*;
+    use paper_webui::core::instance::InstanceConfig;
     use paper_webui::fileserv::file_and_error_handler;
 
-    let _pwui_core = paper_webui::core::init().inspect_err(|e| println!("{e}"));
+    let pwui_core = paper_webui::core::init().unwrap();
+
+    let mut cfg = InstanceConfig::default();
+    cfg.with_executable("./server.js").unwrap();
+    pwui_core.new_instance(cfg);
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
