@@ -36,7 +36,7 @@ mod event_loop {
 
     impl RunnerEventLoop {
         pub(super) fn spawn(mut rx: mpsc::UnboundedReceiver<Req>) -> JoinHandle<()> {
-            tokio::task::spawn(async move {
+            let fut = async move {
                 while let Some(req) = rx.recv().await {
                     let mut instances: Vec<Instance> = vec![];
 
@@ -48,7 +48,8 @@ mod event_loop {
                         }
                     }
                 }
-            })
+            };
+            tokio::task::spawn(fut)
         }
     }
 }

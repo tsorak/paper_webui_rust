@@ -1,3 +1,7 @@
+use std::sync::Arc;
+
+use paper_webui::core::runner::Runner;
+
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
@@ -8,11 +12,11 @@ async fn main() {
     use paper_webui::core::instance::InstanceConfig;
     use paper_webui::fileserv::file_and_error_handler;
 
-    let pwui_core = paper_webui::core::init().unwrap();
+    let runner = paper_webui::core::init().unwrap();
 
     let mut cfg = InstanceConfig::default();
     cfg.with_executable("./server.js").unwrap();
-    pwui_core.new_instance(cfg);
+    runner.new_instance(cfg);
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
@@ -24,9 +28,18 @@ async fn main() {
     let addr = leptos_options.site_addr;
     let routes = generate_route_list(App);
 
+    let app_state = AppState { runner };
+
     // build our application with a route
     let app = Router::new()
-        .leptos_routes(&leptos_options, routes, App)
+        .leptos_routes_with_context(
+            &leptos_options,
+            routes,
+            move || {
+                provide_context(app_state.clone());
+            },
+            App,
+        )
         .fallback(file_and_error_handler)
         .with_state(leptos_options);
 
@@ -35,6 +48,11 @@ async fn main() {
     axum::serve(listener, app.into_make_service())
         .await
         .unwrap();
+}
+
+#[derive(Clone)]
+struct AppState {
+    pub runner: Arc<Runner>,
 }
 
 #[cfg(not(feature = "ssr"))]
