@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use tokio::process::Command;
 
-use crate::core::error::instance::ServerExecutable;
+use crate::error::instance::ServerExecutable;
 
 pub struct InstanceConfig {
     pub name: String,
@@ -17,7 +17,7 @@ pub struct Instance {
 }
 
 impl Instance {
-    pub fn new(cfg: InstanceConfig) -> Result<Self, crate::core::Error> {
+    pub fn new(cfg: InstanceConfig) -> Result<Self, crate::Error> {
         let mut cmd = Command::new("java");
         cmd.args([
             "-jar",
@@ -43,8 +43,8 @@ impl Instance {
 }
 
 impl InstanceConfig {
-    pub fn with_executable(&mut self, p: impl Into<PathBuf>) -> Result<(), crate::core::Error> {
-        use crate::core::error::instance::ServerExecutable;
+    pub fn with_executable(&mut self, p: impl Into<PathBuf>) -> Result<(), crate::Error> {
+        use crate::error::instance::ServerExecutable;
 
         let p: PathBuf = p.into();
         let p = p

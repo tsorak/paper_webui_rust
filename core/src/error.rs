@@ -45,15 +45,15 @@ pub mod instance {
     }
 
     impl ServerExecutable {
-        pub fn box_new(path: PathBuf, message: impl AsRef<str>) -> crate::core::Error {
-            crate::core::Error::ServerExecutable(Self {
+        pub fn box_new(path: PathBuf, message: impl AsRef<str>) -> crate::Error {
+            crate::Error::ServerExecutable(Self {
                 path: Some(path),
                 message: message.as_ref().to_string(),
             })
         }
 
-        pub fn box_msg(message: impl AsRef<str>) -> crate::core::Error {
-            crate::core::Error::ServerExecutable(Self {
+        pub fn box_msg(message: impl AsRef<str>) -> crate::Error {
+            crate::Error::ServerExecutable(Self {
                 path: None,
                 message: message.as_ref().to_string(),
             })

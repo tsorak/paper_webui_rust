@@ -8,7 +8,7 @@ pub struct Runner {
 }
 
 impl Runner {
-    pub(in crate::core) fn new() -> Self {
+    pub(crate) fn new() -> Self {
         let ch = mpsc::unbounded_channel();
 
         let handle = event_loop::RunnerEventLoop::spawn(ch.1);
@@ -28,7 +28,7 @@ pub enum Req {
 mod event_loop {
     use tokio::{sync::mpsc, task::JoinHandle};
 
-    use crate::core::instance::Instance;
+    use crate::instance::Instance;
 
     use super::Req;
 
